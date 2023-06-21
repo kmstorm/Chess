@@ -6,11 +6,11 @@ import pandas as pd
 
 piece_score = {"K": 0, "Q": 9, "R": 5, "B": 3, "N": 3, "p": 1}
 
-knight_scores = pd.read_csv('data/knight.csv')
-bishop_scores = pd.read_csv('data/bishop.csv')
-rook_scores = pd.read_csv('data/rook.csv')
-queen_scores = pd.read_csv('data/queen.csv')
-pawn_scores = pd.read_csv('data/pawn.csv')
+knight_scores = pd.read_csv('data/knight.csv', header=None)
+bishop_scores = pd.read_csv('data/bishop.csv', header=None)
+rook_scores = pd.read_csv('data/rook.csv', header=None)
+queen_scores = pd.read_csv('data/queen.csv', header=None)
+pawn_scores = pd.read_csv('data/pawn.csv', header=None)
 
 # knight_scores = [[0.0, 0.1, 0.2, 0.2, 0.2, 0.2, 0.1, 0.0],
 #                  [0.1, 0.3, 0.5, 0.5, 0.5, 0.5, 0.3, 0.1],
@@ -75,15 +75,18 @@ DEPTH = 3
 
 def findBestMove(game_state, valid_moves, return_queue):
     global next_move
+    global score_move
     next_move = None
+    score_move = 0.0
     random.shuffle(valid_moves)
     findMoveMiniMaxAlphaBeta(game_state, valid_moves, DEPTH, -CHECKMATE, CHECKMATE,
                              1 if game_state.white_to_move else -1)
     return_queue.put(next_move)
-
+    print(score_move)
 
 def findMoveMiniMaxAlphaBeta(game_state, valid_moves, depth, alpha, beta, turn_multiplier):
     global next_move
+    global score_move
     if depth == 0:
         return turn_multiplier * scoreBoard(game_state)
     # move ordering - implement later
@@ -96,6 +99,7 @@ def findMoveMiniMaxAlphaBeta(game_state, valid_moves, depth, alpha, beta, turn_m
             max_score = score
             if depth == DEPTH:
                 next_move = move
+                score_move = max_score
         game_state.undoMove()
         if max_score > alpha:
             alpha = max_score
