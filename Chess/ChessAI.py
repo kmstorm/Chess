@@ -84,6 +84,7 @@ def findBestMove(game_state, valid_moves, return_queue):
     return_queue.put(next_move)
     print(score_move)
 
+
 def findMoveMiniMaxAlphaBeta(game_state, valid_moves, depth, alpha, beta, turn_multiplier):
     global next_move
     global score_move
