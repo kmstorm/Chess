@@ -79,7 +79,7 @@ def findMoveMiniMaxAlphaBeta(game_state, valid_moves, depth, alpha, beta, turn_m
     global next_move
     if depth == 0:
         return turn_multiplier * scoreBoard(game_state)
-    # move ordering - implement later //TODO
+    # move ordering - implement later
     max_score = -CHECKMATE
     for move in valid_moves:
         game_state.makeMove(move)
