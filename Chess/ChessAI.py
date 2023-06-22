@@ -2,6 +2,7 @@
 Handling the AI moves.
 """
 import random
+
 import pandas as pd
 
 piece_score = {"K": 0, "Q": 9, "R": 5, "B": 3, "N": 3, "p": 1}
@@ -94,7 +95,7 @@ def findMoveMiniMaxAlphaBeta(game_state, valid_moves, depth, alpha, beta, turn_m
     max_score = -CHECKMATE
     for move in valid_moves:
         game_state.makeMove(move)
-        next_moves = game_state.getValidMoves()
+        next_moves = game_state.getValidMoves
         score = -findMoveMiniMaxAlphaBeta(game_state, next_moves, depth - 1, -beta, -alpha, -turn_multiplier)
         if score > max_score:
             max_score = score

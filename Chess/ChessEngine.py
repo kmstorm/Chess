@@ -8,7 +8,7 @@ It will keep move log.
 class GameState:
     def __init__(self):
         """
-        Board is an 8x8 2d list, each element in list has 2 characters.
+        Board is 8x8 2d list, each element in list has 2 characters.
         The first character represents the color of the piece: 'b' or 'w'.
         The second character represents the type of the piece: 'R', 'N', 'B', 'Q', 'K' or 'p'.
         "--" represents an empty space with no piece.
@@ -161,6 +161,7 @@ class GameState:
                 elif move.start_col == 7:  # right rook
                     self.current_castling_rights.bks = False
 
+    @property
     def getValidMoves(self):
         """
         All moves considering checks.
@@ -194,12 +195,12 @@ class GameState:
                         valid_square = (king_row + check[2] * i,
                                         king_col + check[3] * i)  # check[2] and check[3] are the check directions
                         valid_squares.append(valid_square)
-                        if valid_square[0] == check_row and valid_square[
-                            1] == check_col:  # once you get to piece and check
+                        # once get to piece and check
+                        if valid_square[0] == check_row and valid_square[1] == check_col:
                             break
                 # get rid of any moves that don't block check or move king
                 for i in range(len(moves) - 1, -1, -1):  # iterate through the list backwards when removing elements
-                    if moves[i].piece_moved[1] != "K":  # move doesn't move king so it must block or capture
+                    if moves[i].piece_moved[1] != "K":  # move doesn't move king, so it must block or capture
                         if not (moves[i].end_row,
                                 moves[i].end_col) in valid_squares:  # move doesn't block or capture piece
                             moves.remove(moves[i])
@@ -212,11 +213,10 @@ class GameState:
             else:
                 self.getCastleMoves(self.black_king_location[0], self.black_king_location[1], moves)
 
-        if len(moves) == 0:
+        if len(moves) == 0:  # checkmate or stalemate
             if self.inCheck():
                 self.checkmate = True
             else:
-                # TODO stalemate on repeated moves
                 self.stalemate = True
         else:
             self.checkmate = False
@@ -415,8 +415,8 @@ class GameState:
             if self.pins[i][0] == row and self.pins[i][1] == col:
                 piece_pinned = True
                 pin_direction = (self.pins[i][2], self.pins[i][3])
-                if self.board[row][col][
-                    1] != "Q":  # can't remove queen from pin on rook moves, only remove it on bishop moves
+                if self.board[row][col][1] != "Q":
+                    # can't remove queen from pin on rook moves, only remove it on bishop moves
                     self.pins.remove(self.pins[i])
                 break
 
@@ -563,8 +563,9 @@ class CastleRights:
 
 
 class Move:
-    # in chess, fields on the board are described by two symbols, one of them being number between 1-8 (which is corresponding to rows)
-    # and the second one being a letter between a-f (corresponding to columns), in order to use this notation we need to map our [row][col] coordinates
+    # in chess, fields on the board are described by two symbols, one of them being number between 1-8
+    # and the second one being a letter between a-f
+    # in order to use this notation we need to map our [row][col] coordinates
     # to match the ones used in the original chess game
     ranks_to_rows = {"1": 7, "2": 6, "3": 5, "4": 4,
                      "5": 3, "6": 2, "7": 1, "8": 0}
@@ -595,7 +596,7 @@ class Move:
 
     def __eq__(self, other):
         """
-        Overriding the equals method.
+        Overriding the equal method.
         """
         if isinstance(other, Move):
             return self.moveID == other.moveID

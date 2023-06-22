@@ -39,7 +39,7 @@ def main():
     clock = p.time.Clock()
     screen.fill(p.Color("white"))
     game_state = ChessEngine.GameState()
-    valid_moves = game_state.getValidMoves()
+    valid_moves = game_state.getValidMoves
     move_made = False  # flag variable for when a move is made
     animate = False  # flag variable for when should animate move
     loadImages()  # update image for chess
@@ -97,7 +97,7 @@ def main():
                     move_undone = True
                 if e.key == p.K_r:  # reset the game when 'r' is pressed
                     game_state = ChessEngine.GameState()
-                    valid_moves = game_state.getValidMoves()
+                    valid_moves = game_state.getValidMoves
                     square_selected = ()
                     player_clicks = []
                     move_made = False
@@ -128,7 +128,7 @@ def main():
         if move_made:
             if animate:
                 animateMove(game_state.move_log[-1], screen, game_state.board, clock)
-            valid_moves = game_state.getValidMoves()
+            valid_moves = game_state.getValidMoves
             move_made = False
             animate = False
             move_undone = False
