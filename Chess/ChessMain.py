@@ -51,8 +51,8 @@ def main():
     move_undone = False
     move_finder_process = None
     move_log_font = pg.font.SysFont("Arial", 14, False, False)
-    player_one = True  # if a human is playing white, then this will be True, else False
-    player_two = not player_one
+    player_one = False  # human = True
+    player_two = False  # AI = false
 
     while running:
         human_turn = (game_state.white_to_move and player_one) or (not game_state.white_to_move and player_two)
