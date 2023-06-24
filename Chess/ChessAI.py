@@ -71,6 +71,8 @@ piece_position_scores = {"wN": knight_scores,
 
 CHECKMATE = 1000
 STALEMATE = 0
+
+#Depth in mimaxcode
 DEPTH = 3
 
 

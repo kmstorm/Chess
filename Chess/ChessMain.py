@@ -51,6 +51,7 @@ def main():
     move_undone = False
     move_finder_process = None
     move_log_font = pg.font.SysFont("Arial", 14, False, False)
+    # player in game
     player_one = False  # human = True
     player_two = False  # AI = false
 
